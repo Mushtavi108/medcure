@@ -1,5 +1,5 @@
 // lib/main.dart
-// MedCure - Premium Medical Splash Screen
+// MedCure - Premium Medical Splash Screen with Login Options
 import 'dart:async';
 import 'dart:ui';
 import 'package:flutter/material.dart';
@@ -23,6 +23,12 @@ class MedCureApp extends StatelessWidget {
         fontFamily: 'Roboto',
       ),
       home: const SplashScreen(),
+      // Define the routes for navigation
+      routes: {
+        '/welcome': (context) => const WelcomeScreen(),
+        '/patientLogin': (context) => const PatientLoginScreen(),
+        '/doctorLogin': (context) => const DoctorLoginScreen(),
+      },
     );
   }
 }
@@ -63,11 +69,11 @@ class _SplashScreenState extends State<SplashScreen>
     // Start the animations
     _controller.forward();
 
-    // Navigate to the home screen after 3 seconds
+    // Navigate to the welcome screen after 3 seconds
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const WelcomeScreen()),
       );
     });
   }
@@ -233,21 +239,152 @@ class _SplashScreenState extends State<SplashScreen>
   }
 }
 
-// A simple placeholder for the home screen
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+// Welcome Screen with Two Buttons
+class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MedCure Home'),
+        title: const Text('MedCure'),
         backgroundColor: const Color(0xFF0EA5A5),
       ),
-      body: const Center(
-        child: Text(
-          'Welcome to the Future of Healthcare.',
-          style: TextStyle(fontSize: 20),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // App Icon and Welcome Message
+            const Icon(
+              Icons.health_and_safety,
+              size: 70,
+              color: Color(0xFF0EA5A5),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Welcome to the Future of Healthcare',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Please choose your access portal',
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 40),
+
+            // Button 1: Patient Portal
+            SizedBox(
+              width: 250,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  // Navigate to Patient Login Screen
+                  Navigator.pushNamed(context, '/patientLogin');
+                },
+                icon: const Icon(Icons.person_outline),
+                label: const Text('Patient Portal'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF0EA5A5), // Teal color
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Button 2: Medical Professional
+            SizedBox(
+              width: 250,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  // Navigate to Doctor Login Screen
+                  Navigator.pushNamed(context, '/doctorLogin');
+                },
+                icon: const Icon(Icons.medical_services_outlined),
+                label: const Text('Medical Professional'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF2563EB), // Blue color
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Placeholder Screen for Patient Login
+class PatientLoginScreen extends StatelessWidget {
+  const PatientLoginScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Patient Portal'),
+        backgroundColor: const Color(0xFF0EA5A5),
+      ),
+      body: const Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Secure Patient Login',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Here you will be able to:\n• View your health records\n• Message your doctor\n• Schedule appointments\n• Track your treatment plan',
+              style: TextStyle(fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
+            // In a real app, you would add a login form here
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Placeholder Screen for Doctor Login
+class DoctorLoginScreen extends StatelessWidget {
+  const DoctorLoginScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Medical Professional Portal'),
+        backgroundColor: const Color(0xFF2563EB),
+      ),
+      body: const Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Healthcare Provider Login',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Here you will be able to:\n• Access patient medical charts\n• Manage your appointment schedule\n• Prescribe medication and treatments\n• Communicate with your patients',
+              style: TextStyle(fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
+            // In a real app, you would add a login form here
+          ],
         ),
       ),
     );
